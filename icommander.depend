@@ -1,0 +1,78 @@
+# depslib dependency file v1.0
+1652468413 source:/home/dmitry/code/icommander/ic_strings.cpp
+	<iostream>
+
+1652468872 source:/home/dmitry/code/icommander/main.cpp
+	<string>
+	<iostream>
+	<vector>
+	<map>
+	"GL/glut.h"
+	"IL/il.h"
+	"IL/ilu.h"
+	"engine.h"
+	"ic_strings.h"
+
+1652168604 /home/dmitry/code/icommander/GL/glut.h
+	"freeglut_std.h"
+
+1652168604 /home/dmitry/code/icommander/GL/freeglut_std.h
+	<windows.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1652168604 /home/dmitry/code/icommander/IL/il.h
+	<stdio.h>
+	<limits.h>
+	<wchar.h>
+
+1652168604 /home/dmitry/code/icommander/IL/ilu.h
+	"IL/il.h"
+
+1652468355 /home/dmitry/code/icommander/engine.h
+
+1652468413 /home/dmitry/code/icommander/ic_strings.h
+
+1652468988 source:/home/dmitry/code/icommander/engine.cpp
+	<iostream>
+	<string>
+	<array>
+	<vector>
+	<map>
+	"GL/glut.h"
+	"IL/il.h"
+	"IL/ilu.h"
+	"engine.h"
+	"ic_strings.h"
+
+1652168604 /home/dmitry/code/icommander//GL/gl.h
+	"gl_mangle.h"
+	<windows.h>
+	<GL/glext.h>
+
+1652168604 /home/dmitry/code/icommander//GL/gl_mangle.h
+
+1652168604 /home/dmitry/code/icommander//GL/glext.h
+	<windows.h>
+	<stddef.h>
+	<inttypes.h>
+	<inttypes.h>
+	<inttypes.h>
+	<stdint.h>
+	<stdint.h>
+	<inttypes.h>
+
+1652168604 /home/dmitry/code/icommander//GL/glu.h
+	"glu_mangle.h"
+	<GL/gl.h>
+
+1652168604 /home/dmitry/code/icommander//GL/glu_mangle.h
+
+1652168604 /home/dmitry/code/icommander//IL/il.h
+	<stdio.h>
+	<limits.h>
+	<wchar.h>
+

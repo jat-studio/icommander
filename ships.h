@@ -7,6 +7,8 @@
 class ClassShip : public ClassSceneObject{
     private:
     public:
+        // constructor
+        ClassShip(intPoint2d position) : ClassSceneObject(position){};
         // painting object
         virtual void Draw();
         // moving object
@@ -18,6 +20,8 @@ class ClassShip : public ClassSceneObject{
 class ClassTriangleShip : public ClassShip{
     private:
     public:
+        // constructor
+        ClassTriangleShip(intPoint2d position) : ClassShip(position){};
         // painting object
         virtual void Draw();
         // moving object
@@ -29,6 +33,8 @@ class ClassTriangleShip : public ClassShip{
 class ClassQuadShip : public ClassShip{
     private:
     public:
+        // constructor
+        ClassQuadShip(intPoint2d position) : ClassShip(position){};
         // painting object
         virtual void Draw();
         // moving object

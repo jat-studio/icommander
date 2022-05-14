@@ -18,6 +18,11 @@ using namespace std;
 #include "ships.h"
 
 /*#####################Class Scene Object implementation###################*/
+// constructor
+ClassSceneObject::ClassSceneObject(intPoint2d position){
+    ClassSceneObject::position = position;
+}
+
 void ClassSceneObject::Draw(){}
 
 void ClassSceneObject::ProcessMoving(unsigned short int direction, float speed){}
@@ -316,12 +321,15 @@ void ClassConsole::Goto_x_y(ClassScene &active_scene, int x, int y){
 
 // add new scene object by type
 void ClassConsole::AddSceneObject(ClassScene &active_scene, int object_type){
+    intPoint2d position;
+    position.x = rand() % 130 - 65;
+    position.y = rand() % 70 - 35;
     switch (object_type){
         case 0:
-            active_scene.scene_objects.push_back(new ClassTriangleShip());
+            active_scene.scene_objects.push_back(new ClassTriangleShip(position));
         break;
         case 1:
-            active_scene.scene_objects.push_back(new ClassQuadShip());
+            active_scene.scene_objects.push_back(new ClassQuadShip(position));
         break;
     }
 }

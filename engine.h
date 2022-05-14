@@ -17,6 +17,10 @@ struct intPoint2d{
 class ClassSceneObject{
     private:
     public:
+        intPoint2d position;
+
+        // constructor
+        ClassSceneObject(intPoint2d position);
         // painting object
         virtual void Draw();
         // moving object

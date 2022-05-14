@@ -87,7 +87,7 @@ void ConsoleModeKeys(unsigned char key){
     }
     // pressing enter
     if (key == 13){
-        Console.Enter();
+        Console.Enter(Scene);
     }
     // pressing backspace
     if (key == 8){
@@ -141,9 +141,6 @@ int main(int argc, char *argv[]){
     // load Textures
     Scene.LoadTextures(textures_list);
     Scene.InitTextures(textures_list.size());
-
-    Scene.scene_objects.push_back(new ClassTriangleShip());
-    Scene.scene_objects.push_back(new ClassQuadShip());
 
     // defining events of window
     glutDisplayFunc(SceneDraw);

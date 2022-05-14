@@ -44,6 +44,8 @@
 		<Unit filename="ic_strings.cpp" />
 		<Unit filename="ic_strings.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="ships.cpp" />
+		<Unit filename="ships.h" />
 		<Extensions />
 	</Project>
 </CodeBlocks_project_file>

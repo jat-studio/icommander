@@ -69,8 +69,6 @@ class ClassScene{
           2 - up
           3 - down*/
         void ProcessMoving(unsigned short int direction);
-        // add new object to scene
-        void AddSceneObject(ClassSceneObject &scene_object);
         // destructor
         ~ClassScene();
 
@@ -81,8 +79,8 @@ class ClassScene{
 class ClassConsole{
     public:
         // array of functions
-        map <string, void (ClassConsole::*)(int, int)> dualcommands;
-        map <string, void (ClassConsole::*)(int)> singlecommands;
+        map <string, void (ClassConsole::*)(ClassScene&, int, int)> dualcommands;
+        map <string, void (ClassConsole::*)(ClassScene&, int)> singlecommands;
         // string placing parameters
         float str_height = 0.13;
         float str_start_pos = 0.90;
@@ -105,11 +103,11 @@ class ClassConsole{
         // set 2d mode
         void Reshape(GLsizei Width, GLsizei Height);
         // pressing Enter
-        void Enter();
+        void Enter(ClassScene &active_scene);
         // goto x y coordinates
-        void Goto_x_y(int x, int y);
+        void Goto_x_y(ClassScene &active_scene, int x, int y);
         // add new scene object by type
-        void AddSceneObject(int object_type);
+        void AddSceneObject(ClassScene &active_scene, int object_type);
         // destructor
         ~ClassConsole();
 };

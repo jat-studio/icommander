@@ -153,7 +153,7 @@ void ClassScene::Draw(){
     glScalef(scale, scale, 0.0);
 
     ClassScene::DrawSceneObjects();
-    //ClassScene::DrawStars();
+    ClassScene::DrawStars();
 
     glutSwapBuffers();
 }
@@ -168,13 +168,7 @@ void ClassScene::DrawStars(){
 }
 
 void ClassScene::DrawSceneObjects(){
-    glBegin(GL_POLYGON);
     for_each(ClassScene::scene_objects.begin(), ClassScene::scene_objects.end(), mem_fun(&ClassSceneObject::Draw));
-    glEnd();
-}
-
-void ClassScene::AddSceneObject(ClassSceneObject &scene_object){
-    //ClassScene::scene_objects.insert(ClassScene::scene_objects.end(), scene_object);
 }
 
 // repainting OpenGL by reshape window
@@ -261,7 +255,7 @@ void ClassConsole::Reshape(GLsizei Width, GLsizei Height){
 }
 
 // pressing Enter
-void ClassConsole::Enter(){
+void ClassConsole::Enter(ClassScene &active_scene){
     // moving console strings up
     for (unsigned short int i = 4; i <= 12; i++){
         ClassConsole::console_str[i] = ClassConsole::console_str[i + 1];
@@ -295,14 +289,14 @@ void ClassConsole::Enter(){
     // call function with two parameters
     if (valid1 && valid2){
         if (ClassConsole::dualcommands.count(command) > 0){
-            (this->*ClassConsole::dualcommands[command])(intparam1, intparam2);
+            (this->*ClassConsole::dualcommands[command])(active_scene, intparam1, intparam2);
             ClassConsole::console_str[13] = "done command | ";
         }
     }
     // call function with one parameter
     if (valid1 && !valid2){
         if (ClassConsole::singlecommands.count(command) > 0){
-            (this->*ClassConsole::singlecommands[command])(intparam1);
+            (this->*ClassConsole::singlecommands[command])(active_scene, intparam1);
             ClassConsole::console_str[13] = "done command | ";
         }
     }
@@ -313,7 +307,7 @@ void ClassConsole::Enter(){
 }
 
 // goto x and y coordinates
-void ClassConsole::Goto_x_y(int x, int y){
+void ClassConsole::Goto_x_y(ClassScene &active_scene, int x, int y){
     std::cout << x;
     std::cout << ";";
     std::cout << y;
@@ -321,13 +315,13 @@ void ClassConsole::Goto_x_y(int x, int y){
 }
 
 // add new scene object by type
-void ClassConsole::AddSceneObject(int object_type){
+void ClassConsole::AddSceneObject(ClassScene &active_scene, int object_type){
     switch (object_type){
         case 0:
-            std::cout << "ClassTriangleShip";
+            active_scene.scene_objects.push_back(new ClassTriangleShip());
         break;
         case 1:
-            std::cout << "ClassQuadShip";
+            active_scene.scene_objects.push_back(new ClassQuadShip());
         break;
     }
 }

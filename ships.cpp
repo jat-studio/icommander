@@ -24,10 +24,12 @@ ClassShip::~ClassShip(){}
 void ClassTriangleShip::ProcessMoving(unsigned short int direction, float speed){}
 
 void ClassTriangleShip::Draw(){
+    glBegin(GL_POLYGON);
     glColor3f(1, 1, 1);
     glVertex3f(0, 0, 0);
     glVertex3f(0, 1, 0);
     glVertex3f(1, 1, 0);
+    glEnd();
 }
 
 ClassTriangleShip::~ClassTriangleShip(){}
@@ -36,11 +38,13 @@ ClassTriangleShip::~ClassTriangleShip(){}
 void ClassQuadShip::ProcessMoving(unsigned short int direction, float speed){}
 
 void ClassQuadShip::Draw(){
+    glBegin(GL_POLYGON);
     glColor3f(1, 1, 1);
     glVertex3f(2, 0, 0);
     glVertex3f(3, 0, 0);
     glVertex3f(3, 1, 0);
     glVertex3f(2, 1, 0);
+    glEnd();
 }
 
 ClassQuadShip::~ClassQuadShip(){}

@@ -5,6 +5,7 @@ using namespace std;
 #include <array>
 #include <vector>
 #include <map>
+#include <algorithm>
 
 /*Open GL*/
 #include "GL/glut.h"
@@ -14,6 +15,15 @@ using namespace std;
 /*My library*/
 #include "engine.h"
 #include "ic_strings.h"
+#include "ships.h"
+
+/*#####################Class Scene Object implementation###################*/
+void ClassSceneObject::Draw(){}
+
+void ClassSceneObject::ProcessMoving(unsigned short int direction, float speed){}
+
+// destructor
+ClassSceneObject::~ClassSceneObject(){}
 
 /*#####################Class Scene implementation###################*/
 // initialization count of textures
@@ -142,7 +152,8 @@ void ClassScene::Draw(){
     // painting world
     glScalef(scale, scale, 0.0);
 
-    ClassScene::DrawStars();
+    ClassScene::DrawSceneObjects();
+    //ClassScene::DrawStars();
 
     glutSwapBuffers();
 }
@@ -154,6 +165,16 @@ void ClassScene::DrawStars(){
         glVertex3f(rand() % 130 - 65, rand() % 70 - 35, 0);
     }
     glEnd();
+}
+
+void ClassScene::DrawSceneObjects(){
+    glBegin(GL_POLYGON);
+    for_each(ClassScene::scene_objects.begin(), ClassScene::scene_objects.end(), mem_fun(&ClassSceneObject::Draw));
+    glEnd();
+}
+
+void ClassScene::AddSceneObject(ClassSceneObject &scene_object){
+    //ClassScene::scene_objects.insert(ClassScene::scene_objects.end(), scene_object);
 }
 
 // repainting OpenGL by reshape window
@@ -179,6 +200,7 @@ ClassConsole::ClassConsole(){
         ClassConsole::console_str[i] = "";
     }
     ClassConsole::dualcommands["goto"] = &ClassConsole::Goto_x_y;
+    ClassConsole::singlecommands["addobj"] = &ClassConsole::AddSceneObject;
 }
 
 // painting Console
@@ -296,6 +318,18 @@ void ClassConsole::Goto_x_y(int x, int y){
     std::cout << ";";
     std::cout << y;
     std::cout << ";\n";
+}
+
+// add new scene object by type
+void ClassConsole::AddSceneObject(int object_type){
+    switch (object_type){
+        case 0:
+            std::cout << "ClassTriangleShip";
+        break;
+        case 1:
+            std::cout << "ClassQuadShip";
+        break;
+    }
 }
 
 // destructor

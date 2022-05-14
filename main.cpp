@@ -13,6 +13,7 @@ using namespace std;
 /*My library*/
 #include "engine.h"
 #include "ic_strings.h"
+#include "ships.h"
 
 // id GLwindow
 unsigned short int wnd, console;
@@ -140,6 +141,9 @@ int main(int argc, char *argv[]){
     // load Textures
     Scene.LoadTextures(textures_list);
     Scene.InitTextures(textures_list.size());
+
+    Scene.scene_objects.push_back(new ClassTriangleShip());
+    Scene.scene_objects.push_back(new ClassQuadShip());
 
     // defining events of window
     glutDisplayFunc(SceneDraw);

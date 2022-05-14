@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1652468413 source:/home/dmitry/code/icommander/ic_strings.cpp
+1652472246 source:/home/dmitry/code/icommander/ic_strings.cpp
 	<iostream>
 
-1652468872 source:/home/dmitry/code/icommander/main.cpp
+1652533145 source:/home/dmitry/code/icommander/main.cpp
 	<string>
 	<iostream>
 	<vector>
@@ -12,6 +12,7 @@
 	"IL/ilu.h"
 	"engine.h"
 	"ic_strings.h"
+	"ships.h"
 
 1652168604 /home/dmitry/code/icommander/GL/glut.h
 	"freeglut_std.h"
@@ -32,21 +33,24 @@
 1652168604 /home/dmitry/code/icommander/IL/ilu.h
 	"IL/il.h"
 
-1652468355 /home/dmitry/code/icommander/engine.h
+1652534029 /home/dmitry/code/icommander/engine.h
+	<list>
 
 1652468413 /home/dmitry/code/icommander/ic_strings.h
 
-1652468988 source:/home/dmitry/code/icommander/engine.cpp
+1652534148 source:/home/dmitry/code/icommander/engine.cpp
 	<iostream>
 	<string>
 	<array>
 	<vector>
 	<map>
+	<algorithm>
 	"GL/glut.h"
 	"IL/il.h"
 	"IL/ilu.h"
 	"engine.h"
 	"ic_strings.h"
+	"ships.h"
 
 1652168604 /home/dmitry/code/icommander//GL/gl.h
 	"gl_mangle.h"
@@ -75,4 +79,16 @@
 	<stdio.h>
 	<limits.h>
 	<wchar.h>
+
+1652534403 /home/dmitry/code/icommander/ships.h
+
+1652534655 source:/home/dmitry/code/icommander/ships.cpp
+	<vector>
+	<string>
+	<map>
+	"GL/glut.h"
+	"IL/il.h"
+	"IL/ilu.h"
+	"engine.h"
+	"ships.h"
 

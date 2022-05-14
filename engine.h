@@ -2,6 +2,8 @@ using namespace std;
 #ifndef ENGINE_H_INCLUDED
 #define ENGINE_H_INCLUDED
 
+#include <list>
+
 // scale of scene
 const float scale = 0.07;
 
@@ -12,10 +14,24 @@ struct intPoint2d{
 };
 
 /*#######################   classes   #######################*/
+class ClassSceneObject{
+    private:
+    public:
+        // painting object
+        virtual void Draw();
+        // moving object
+        virtual void ProcessMoving(unsigned short int direction, float speed);
+        // destructor
+        ~ClassSceneObject();
+};
+
 class ClassScene{
     private:
+        void DrawSceneObjects();
         void DrawStars();
     public:
+        list<ClassSceneObject*> scene_objects;
+
         unsigned short int textures_count;
         // index texture of tiles
         GLuint *texture_tiles;
@@ -53,6 +69,8 @@ class ClassScene{
           2 - up
           3 - down*/
         void ProcessMoving(unsigned short int direction);
+        // add new object to scene
+        void AddSceneObject(ClassSceneObject &scene_object);
         // destructor
         ~ClassScene();
 
@@ -90,6 +108,8 @@ class ClassConsole{
         void Enter();
         // goto x y coordinates
         void Goto_x_y(int x, int y);
+        // add new scene object by type
+        void AddSceneObject(int object_type);
         // destructor
         ~ClassConsole();
 };

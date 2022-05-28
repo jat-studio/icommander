@@ -39,10 +39,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="engine.cpp" />
-		<Unit filename="engine.h" />
-		<Unit filename="ic_strings.cpp" />
-		<Unit filename="ic_strings.h" />
+		<Unit filename="engine/core.cpp" />
+		<Unit filename="engine/core.h" />
+		<Unit filename="engine/ic_strings.cpp" />
+		<Unit filename="engine/ic_strings.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="ships.cpp" />
 		<Unit filename="ships.h" />

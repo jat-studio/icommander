@@ -13,8 +13,8 @@ using namespace std;
 #include "IL/ilu.h"
 
 /*My library*/
-#include "engine.h"
-#include "ic_strings.h"
+#include "engine/core.h"
+#include "engine/ic_strings.h"
 #include "ships.h"
 
 /*#####################Class Scene Object implementation###################*/

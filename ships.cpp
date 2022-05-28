@@ -10,7 +10,7 @@ using namespace std;
 #include "IL/ilu.h"
 
 /*My library*/
-#include "engine.h"
+#include "engine/core.h"
 #include "ships.h"
 
 /*#####################Class Ship implementation###################*/
@@ -25,7 +25,7 @@ void ClassTriangleShip::ProcessMoving(unsigned short int direction, float speed)
 
 void ClassTriangleShip::Draw(){
     glBegin(GL_POLYGON);
-    glColor3f(1, 1, 1);
+    glColor3f(0, 1, 0);
     glVertex3f(ClassTriangleShip::position.x, ClassTriangleShip::position.y, 0);
     glVertex3f(ClassTriangleShip::position.x, ClassTriangleShip::position.y + 1, 0);
     glVertex3f(ClassTriangleShip::position.x + 1, ClassTriangleShip::position.y + 1, 0);
@@ -39,7 +39,7 @@ void ClassQuadShip::ProcessMoving(unsigned short int direction, float speed){}
 
 void ClassQuadShip::Draw(){
     glBegin(GL_POLYGON);
-    glColor3f(1, 1, 1);
+    glColor3f(0, 0, 1);
     glVertex3f(ClassQuadShip::position.x, ClassQuadShip::position.y, 0);
     glVertex3f(ClassQuadShip::position.x + 1, ClassQuadShip::position.y, 0);
     glVertex3f(ClassQuadShip::position.x + 1, ClassQuadShip::position.y + 1, 0);

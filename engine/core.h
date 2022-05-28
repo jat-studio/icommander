@@ -1,6 +1,6 @@
 using namespace std;
-#ifndef ENGINE_H_INCLUDED
-#define ENGINE_H_INCLUDED
+#ifndef CORE_H_INCLUDED
+#define CORE_H_INCLUDED
 
 #include <list>
 
@@ -117,3 +117,4 @@ class ClassConsole{
 };
 
 #endif
+

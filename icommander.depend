@@ -2,7 +2,7 @@
 1652472246 source:/home/dmitry/code/icommander/ic_strings.cpp
 	<iostream>
 
-1652533145 source:/home/dmitry/code/icommander/main.cpp
+1653753454 source:/home/dmitry/code/icommander/main.cpp
 	<string>
 	<iostream>
 	<vector>
@@ -10,8 +10,9 @@
 	"GL/glut.h"
 	"IL/il.h"
 	"IL/ilu.h"
-	"engine.h"
-	"ic_strings.h"
+	"engine/core.h"
+	"engine/console.h"
+	"engine/ic_strings.h"
 	"ships.h"
 
 1652168604 /home/dmitry/code/icommander/GL/glut.h
@@ -80,15 +81,73 @@
 	<limits.h>
 	<wchar.h>
 
-1652534403 /home/dmitry/code/icommander/ships.h
+1652550201 /home/dmitry/code/icommander/ships.h
 
-1652534655 source:/home/dmitry/code/icommander/ships.cpp
+1653735748 source:/home/dmitry/code/icommander/ships.cpp
 	<vector>
 	<string>
 	<map>
 	"GL/glut.h"
 	"IL/il.h"
 	"IL/ilu.h"
-	"engine.h"
+	"engine/core.h"
 	"ships.h"
+
+1653755808 source:/home/dmitry/code/icommander/engine/console.cpp
+	<iostream>
+	<map>
+	<string>
+	<vector>
+	"GL/glut.h"
+	"engine/core.h"
+	"engine/console.h"
+	"engine/ic_strings.h"
+	"ships.h"
+
+1652168604 /home/dmitry/code/icommander//GL/glut.h
+	"freeglut_std.h"
+
+1652168604 /home/dmitry/code/icommander//GL/freeglut_std.h
+	<windows.h>
+	<OpenGL/gl.h>
+	<OpenGL/glu.h>
+	<GL/gl.h>
+	<GL/glu.h>
+	<stdlib.h>
+
+1653736030 /home/dmitry/code/icommander//engine/core.h
+	<list>
+
+1653754728 /home/dmitry/code/icommander//engine/console.h
+
+1653741790 /home/dmitry/code/icommander//engine/ic_strings.h
+
+1652550201 /home/dmitry/code/icommander//ships.h
+
+1653752026 source:/home/dmitry/code/icommander/engine/core.cpp
+	<iostream>
+	<string>
+	<array>
+	<vector>
+	<map>
+	<algorithm>
+	"GL/glut.h"
+	"IL/il.h"
+	"IL/ilu.h"
+	"engine/core.h"
+	"ships.h"
+
+1652168604 /home/dmitry/code/icommander//IL/ilu.h
+	"IL/il.h"
+
+1653741879 source:/home/dmitry/code/icommander/engine/ic_strings.cpp
+	<iostream>
+	<vector>
+
+1653736030 /home/dmitry/code/icommander/engine/core.h
+	<list>
+
+1653754728 /home/dmitry/code/icommander/engine/console.h
+
+1653741790 /home/dmitry/code/icommander/engine/ic_strings.h
 

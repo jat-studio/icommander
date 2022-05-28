@@ -39,6 +39,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="engine/console.cpp" />
+		<Unit filename="engine/console.h" />
 		<Unit filename="engine/core.cpp" />
 		<Unit filename="engine/core.h" />
 		<Unit filename="engine/ic_strings.cpp" />

@@ -17,15 +17,22 @@ using namespace std;
 
 /*#####################Class Console implementation###################*/
 // constructor
-ClassConsole::ClassConsole(){
-    for(unsigned short int i = 0; i <= 13; i++){
-        ClassConsole::console_str[i] = "";
+ClassConsole::ClassConsole(unsigned short int window_height){
+    ClassConsole::window_height = window_height;
+    ClassConsole::str_height = float(ClassConsole::CONSOLE_FONT_PIXELS_HEIGHT * ClassConsole::CONSOLE_WINDOW_SIZE) / float(window_height);
+    ClassConsole::lines_count = int( window_height / (ClassConsole::CONSOLE_FONT_PIXELS_HEIGHT + ClassConsole::CONSOLE_FONT_PIXELS_LINE_SPACING) );
+    ClassConsole::font_line_spacing = float(ClassConsole::CONSOLE_FONT_PIXELS_LINE_SPACING * ClassConsole::CONSOLE_WINDOW_SIZE) / float(window_height);
+
+    for(unsigned short int i = 0; i < ClassConsole::lines_count; i++){
+        ClassConsole::console_str.push_back("");
     }
+
+    ClassConsole::commands["help"] = &ClassConsole::ViewHelp;
     ClassConsole::commands["addobj"] = &ClassConsole::AddSceneObject;
 }
 
 // painting Console
-void ClassConsole::Draw(ClassScene &Object, unsigned short int console, unsigned short int wnd){
+void ClassConsole::Draw(ClassScene &active_scene, unsigned short int console, unsigned short int wnd){
     glutSetWindow(console);
     if (!ClassConsole::visible){
         glutHideWindow();
@@ -40,7 +47,7 @@ void ClassConsole::Draw(ClassScene &Object, unsigned short int console, unsigned
 
     glColor3f(0.0, 0.0, 0.0);
 
-    // drawing fps
+    // calculate fps
     ClassConsole::fps++;
     ClassConsole::t = glutGet(GLUT_ELAPSED_TIME);
     if (ClassConsole::t - ClassConsole::dt > 1000){
@@ -48,24 +55,14 @@ void ClassConsole::Draw(ClassScene &Object, unsigned short int console, unsigned
         ClassConsole::dt = ClassConsole::t;
         ClassConsole::fps = 0;
     }
-    ClassConsole::str_current_pos = ClassConsole::str_start_pos;
-    Object.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, ClassConsole::console_str[0]);
-    ClassConsole::str_current_pos -= ClassConsole::str_height;
 
-    // drawing coordinates
-    ClassConsole::console_str[1] = "X: ";
-    ClassConsole::console_str[1] += Int_To_Str(Object.xpos);
-    ClassConsole::console_str[1] += "; Y: ";
-    ClassConsole::console_str[1] += Int_To_Str(Object.ypos);
-    Object.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, ClassConsole::console_str[1]);
-    ClassConsole::str_current_pos -= ClassConsole::str_height;
-
-    for (unsigned short int i = 4; i <= 13; i++){
-        Object.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, ClassConsole::console_str[i]);
-        ClassConsole::str_current_pos -= ClassConsole::str_height;
+    ClassConsole::str_current_pos = 1.0 - ClassConsole::str_height;
+    for (unsigned short int i = 0; i < ClassConsole::lines_count - 1; i++){
+        active_scene.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, ClassConsole::console_str[i]);
+        ClassConsole::str_current_pos -= ClassConsole::str_height + ClassConsole::font_line_spacing;
     }
 
-    Object.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (ClassConsole::command_str + ClassConsole::current_key + "_"));
+    active_scene.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (ClassConsole::command_str + ClassConsole::current_key + "_"));
 
     glFlush();
 
@@ -81,10 +78,37 @@ void ClassConsole::Reshape(GLsizei Width, GLsizei Height){
     glMatrixMode(GL_MODELVIEW);
 }
 
+// processing keyboard keys in console mode
+void ClassConsole::ProcessKeys(ClassScene &active_scene, unsigned char key){
+    // escape - exit to game mode
+    if (key == 27){
+        this->visible = false;
+        active_scene.app_mode = 0;
+    }
+    // saving pressed keys to current_key variable if key and length of string is valid
+    if ((key >= 32) && (key <= 126) && (this->current_key.length() < 50)){
+        this->current_key += key;
+    }
+    // pressing enter
+    if (key == 13){
+        this->Enter(active_scene);
+    }
+    // pressing backspace
+    if (key == 8){
+        string tmp = this->current_key;
+        this->current_key = "";
+        if (tmp.length() > 0){
+            for (unsigned short int i = 0; i < (tmp.length() - 1); i++){
+                this->current_key += tmp[i];
+            }
+        }
+    }
+}
+
 // pressing Enter
 void ClassConsole::Enter(ClassScene &active_scene){
     // moving console strings up
-    for (unsigned short int i = 4; i <= 12; i++){
+    for (unsigned short int i = 1; i < ClassConsole::lines_count - 1; i++){
         ClassConsole::console_str[i] = ClassConsole::console_str[i + 1];
     }
 
@@ -94,14 +118,14 @@ void ClassConsole::Enter(ClassScene &active_scene){
     Split_Str( command_value, parsed_command, ' ' );
 
     //call function
-    ClassConsole::console_str[13] = "error command | ";
+    ClassConsole::console_str[ ClassConsole::lines_count - 2 ] = "error command | ";
     if (ClassConsole::commands.count(parsed_command[0]) > 0){
         (this->*ClassConsole::commands[ parsed_command[0] ])(active_scene, parsed_command);
-        ClassConsole::console_str[13] = "done command | ";
+        ClassConsole::console_str[ ClassConsole::lines_count - 1 ] = "done command | ";
     }
 
-    // saving entered value to down string
-    ClassConsole::console_str[13] += ClassConsole::current_key;
+    // saving entered value to last string
+    ClassConsole::console_str[ ClassConsole::lines_count - 2 ] += ClassConsole::current_key;
 
     // clear entering string
     ClassConsole::current_key = "";
@@ -122,6 +146,11 @@ void ClassConsole::AddSceneObject(ClassScene &active_scene, vector<string> parse
             active_scene.scene_objects.push_back(new ClassQuadShip(position));
         break;
     }
+}
+
+// view console commands help
+void ClassConsole::ViewHelp(ClassScene &active_scene, vector<string> parsed_command){
+
 }
 
 // destructor

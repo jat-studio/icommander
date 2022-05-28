@@ -30,6 +30,16 @@ void ClassSceneObject::ProcessMoving(unsigned short int direction, float speed){
 ClassSceneObject::~ClassSceneObject(){}
 
 /*#####################Class Scene implementation###################*/
+// constructor
+ClassScene::ClassScene(vector<string> &textures_list){
+    this->xpos = 0;
+    this->ypos = 0;
+
+    // load Textures
+    this->LoadTextures(textures_list);
+    this->InitTextures(textures_list.size());
+}
+
 // initialization count of textures
 void ClassScene::InitTextures(unsigned short int textures_count){
     // count of textures
@@ -118,7 +128,7 @@ void ClassScene::LoadTextureImage(const char *texture_name, GLuint texture){
 }
 
 // loading textures
-void ClassScene::LoadTextures(vector<string> textures_list){
+void ClassScene::LoadTextures(vector<string> &textures_list){
     // create array of textures
     glGenTextures(textures_count, &ClassScene::texture_tiles[0]);
 

@@ -34,6 +34,11 @@ class ClassScene{
         void DrawSceneObjects();
         void DrawStars();
     public:
+        // application mode:
+        // 0 - game
+        // 1 - console
+        unsigned short int app_mode = 0;
+
         list<ClassSceneObject*> scene_objects;
 
         unsigned short int textures_count;
@@ -48,6 +53,8 @@ class ClassScene{
         float camera_xpos = 0.0;
         float camera_ypos = 0.0;
 
+        // constructor
+        ClassScene(vector<string> &textures_list);
         // initialization count of textures
         void InitTextures(unsigned short int textures_count);
         // loading texture by filename
@@ -61,7 +68,7 @@ class ClassScene{
         // repainting OpenGL by reshape window
         void Reshape(GLsizei Width, GLsizei Height);
         // loading textures
-        void LoadTextures(vector<string> textures_list);
+        void LoadTextures(vector<string> &textures_list);
         // deleting textures
         void ClearTextures();
         // painting Scene

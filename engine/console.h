@@ -36,6 +36,8 @@ class ClassConsole{
         void Reshape(GLsizei Width, GLsizei Height);
         // processing keyboard keys in console mode
         void ProcessKeys(ClassScene &active_scene, unsigned char key);
+        // add some string to end of console
+        void AddStr(string new_string);
         // pressing Enter
         void Enter(ClassScene &active_scene);
         // add new scene object by type

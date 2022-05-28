@@ -105,30 +105,33 @@ void ClassConsole::ProcessKeys(ClassScene &active_scene, unsigned char key){
     }
 }
 
-// pressing Enter
-void ClassConsole::Enter(ClassScene &active_scene){
+// add some string to end of console
+void ClassConsole::AddStr(string new_string){
     // moving console strings up
-    for (unsigned short int i = 1; i < ClassConsole::lines_count - 1; i++){
-        ClassConsole::console_str[i] = ClassConsole::console_str[i + 1];
+    for (unsigned short int i = 1; i < this->lines_count - 1; i++){
+        this->console_str[i] = this->console_str[i + 1];
     }
 
+    this->console_str[ this->lines_count - 2 ] = new_string;
+}
+
+// pressing Enter
+void ClassConsole::Enter(ClassScene &active_scene){
     // parse command and arguments
-    const string command_value = ClassConsole::current_key;
-    vector<string> parsed_command;
+    const string command_value = this->current_key;
+    vector<string> parsed_command = {command_value};
     Split_Str( command_value, parsed_command, ' ' );
 
     //call function
-    ClassConsole::console_str[ ClassConsole::lines_count - 2 ] = "error command | ";
-    if (ClassConsole::commands.count(parsed_command[0]) > 0){
+    if (this->commands.count(parsed_command[0]) > 0){
         (this->*ClassConsole::commands[ parsed_command[0] ])(active_scene, parsed_command);
-        ClassConsole::console_str[ ClassConsole::lines_count - 1 ] = "done command | ";
+    }
+    else{
+        this->AddStr("error command | " + this->current_key);
     }
 
-    // saving entered value to last string
-    ClassConsole::console_str[ ClassConsole::lines_count - 2 ] += ClassConsole::current_key;
-
     // clear entering string
-    ClassConsole::current_key = "";
+    this->current_key = "";
 }
 
 // add new scene object by type
@@ -150,7 +153,41 @@ void ClassConsole::AddSceneObject(ClassScene &active_scene, vector<string> parse
 
 // view console commands help
 void ClassConsole::ViewHelp(ClassScene &active_scene, vector<string> parsed_command){
+    unsigned short int page = 0;
+    if (parsed_command.size() > 1){
+        page = Str_To_Int( parsed_command[1] );
+    }
 
+    // getting all available console commands
+    vector<string> available_commands_list;
+    for (
+        map<string, void (ClassConsole::*)(ClassScene&, vector<string>)>::iterator it = this->commands.begin();
+        it != this->commands.end();
+        ++it
+    ){
+        available_commands_list.push_back(it->first);
+    }
+
+    unsigned short int commands_count = this->commands.size();
+    if (commands_count > this->lines_count - 3) {
+
+        commands_count = this->lines_count - 3;
+
+        unsigned short int start_index = page * commands_count;
+        if (start_index > available_commands_list.size()){
+            start_index = 0;
+        }
+
+        for (unsigned short int i = start_index; i < start_index + commands_count; i++){
+            this->AddStr(available_commands_list[i]);
+        }
+        this->AddStr("-- more by help <page> --");
+    }
+    else{
+        for (unsigned short int i = 0; i < commands_count; i++){
+            this->AddStr(available_commands_list[i]);
+        }
+    }
 }
 
 // destructor

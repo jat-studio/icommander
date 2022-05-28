@@ -17,9 +17,9 @@ using namespace std;
 #include "ships.h"
 
 // id GLwindow
-unsigned short int wnd, console;
+unsigned short int main_window_id, console_window_id;
 
-unsigned short int console_window_height = 200;
+unsigned short int console_window_height = 70;
 
 // list of textures
 vector<string> textures_list;
@@ -33,11 +33,11 @@ ClassConsole Console(console_window_height);
 void SceneReshape(GLsizei Width, GLsizei Height){
     Scene.Reshape(Width, Height);
     // reshaping console window
-    glutSetWindow(console);
+    glutSetWindow(console_window_id);
     glutHideWindow();
     glutReshapeWindow( Width - 20, console_window_height );
     glutShowWindow();
-    glutSetWindow(wnd);
+    glutSetWindow(main_window_id);
 }
 
 // processing keys in game mode
@@ -46,7 +46,7 @@ void GameModeKeys(unsigned char key){
         // escape - exit
         case 27:
             Scene.ClearTextures();
-            glutDestroyWindow(wnd);
+            glutDestroyWindow(main_window_id);
         break;
         // "`" key - enter console mode
         case 96:
@@ -77,13 +77,13 @@ int main(int argc, char *argv[]){
     glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
     glutInitWindowPosition(0, 0);
     glutInitWindowSize(1024, 768);
-    wnd = glutCreateWindow("ICommander 0.0.1");
+    main_window_id = glutCreateWindow("ICommander 0.0.1");
     glutFullScreen();
 
     // defining events of window
     glutDisplayFunc([]() -> void { Scene.Draw(); });
     glutReshapeFunc(SceneReshape);
-    glutIdleFunc([]() -> void { Scene.Draw(); Console.Draw(Scene, console, wnd); });
+    glutIdleFunc([]() -> void { Scene.Draw(); Console.Draw(Scene, console_window_id, main_window_id); });
     glutKeyboardFunc(Keyboard);
 
     // background color
@@ -95,9 +95,9 @@ int main(int argc, char *argv[]){
 
     // console subwindow
     glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
-    console = glutCreateSubWindow(wnd, 10, 10, glutGet(GLUT_WINDOW_WIDTH) - 20, console_window_height);
+    console_window_id = glutCreateSubWindow(main_window_id, 10, 10, glutGet(GLUT_WINDOW_WIDTH) - 20, console_window_height);
     glClearColor(0.0, 1.0, 0.0, 0.0);
-    glutDisplayFunc([]() -> void { Console.Draw(Scene, console, wnd); });
+    glutDisplayFunc([]() -> void { Console.Draw(Scene, console_window_id, main_window_id); });
     glutReshapeFunc([](GLsizei Width, GLsizei Height) -> void { Console.Reshape(Width, Height); });
 
     // processing events of window
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]){
 
     // clear textures
     Scene.ClearTextures();
-    glutDestroyWindow(wnd);
+    glutDestroyWindow(main_window_id);
 
     return 0;
 }

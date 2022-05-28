@@ -12,6 +12,7 @@ using namespace std;
 
 /*My library*/
 #include "engine/core.h"
+#include "engine/console.h"
 #include "engine/ic_strings.h"
 #include "ships.h"
 

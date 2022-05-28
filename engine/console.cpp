@@ -21,8 +21,7 @@ ClassConsole::ClassConsole(){
     for(unsigned short int i = 0; i <= 13; i++){
         ClassConsole::console_str[i] = "";
     }
-    ClassConsole::dualcommands["goto"] = &ClassConsole::Goto_x_y;
-    ClassConsole::singlecommands["addobj"] = &ClassConsole::AddSceneObject;
+    ClassConsole::commands["addobj"] = &ClassConsole::AddSceneObject;
 }
 
 // painting Console
@@ -88,62 +87,30 @@ void ClassConsole::Enter(ClassScene &active_scene){
     for (unsigned short int i = 4; i <= 12; i++){
         ClassConsole::console_str[i] = ClassConsole::console_str[i + 1];
     }
-    // running entered to console command
-    unsigned short int i = 0;
-    unsigned short int len = ClassConsole::current_key.length();
-    string command = "";
-    while ((ClassConsole::current_key[i] != ' ') && (i < len)){
-        command += ClassConsole::current_key[i];
-        i++;
-    }
-    i++;
-    string param1 = "";
-    while ((ClassConsole::current_key[i] != ' ') && (i < len)){
-        param1 += ClassConsole::current_key[i];
-        i++;
-    }
-    i++;
-    string param2 = "";
-    while ((ClassConsole::current_key[i] != ' ') && (i < len)){
-        param2 += ClassConsole::current_key[i];
-        i++;
-    }
-    // preparing to call function
-    bool valid1 = false;
-    bool valid2 = false;
-    int intparam1 = Str_To_Int(param1, &valid1);
-    int intparam2 = Str_To_Int(param2, &valid2);
+
+    // parse command and arguments
+    const string command_value = ClassConsole::current_key;
+    vector<string> parsed_command;
+    Split_Str( command_value, parsed_command, ' ' );
+
+    //call function
     ClassConsole::console_str[13] = "error command | ";
-    // call function with two parameters
-    if (valid1 && valid2){
-        if (ClassConsole::dualcommands.count(command) > 0){
-            (this->*ClassConsole::dualcommands[command])(active_scene, intparam1, intparam2);
-            ClassConsole::console_str[13] = "done command | ";
-        }
+    if (ClassConsole::commands.count(parsed_command[0]) > 0){
+        (this->*ClassConsole::commands[ parsed_command[0] ])(active_scene, parsed_command);
+        ClassConsole::console_str[13] = "done command | ";
     }
-    // call function with one parameter
-    if (valid1 && !valid2){
-        if (ClassConsole::singlecommands.count(command) > 0){
-            (this->*ClassConsole::singlecommands[command])(active_scene, intparam1);
-            ClassConsole::console_str[13] = "done command | ";
-        }
-    }
+
     // saving entered value to down string
     ClassConsole::console_str[13] += ClassConsole::current_key;
+
     // clear entering string
     ClassConsole::current_key = "";
 }
 
-// goto x and y coordinates
-void ClassConsole::Goto_x_y(ClassScene &active_scene, int x, int y){
-    std::cout << x;
-    std::cout << ";";
-    std::cout << y;
-    std::cout << ";\n";
-}
-
 // add new scene object by type
-void ClassConsole::AddSceneObject(ClassScene &active_scene, int object_type){
+void ClassConsole::AddSceneObject(ClassScene &active_scene, vector<string> parsed_command){
+    unsigned short int object_type = Str_To_Int( parsed_command[1] );
+
     intPoint2d position;
     position.x = rand() % 130 - 65;
     position.y = rand() % 70 - 35;
@@ -159,6 +126,5 @@ void ClassConsole::AddSceneObject(ClassScene &active_scene, int object_type){
 
 // destructor
 ClassConsole::~ClassConsole(){
-    ClassConsole::dualcommands.clear();
-    ClassConsole::singlecommands.clear();
+    ClassConsole::commands.clear();
 }

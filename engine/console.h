@@ -8,11 +8,19 @@ class ClassConsole{
         const static unsigned short int CONSOLE_FONT_PIXELS_HEIGHT = 13;
         // from -1 to +1, where 0 is center of window
         const static unsigned short int CONSOLE_WINDOW_SIZE = 2;
+
+        struct consoleCommand{
+            void (ClassConsole::*function_ptr)(ClassScene&, vector<string>);
+            string description;
+        };
+
+        // register new command in console
+        void RegisterCommand(string name, void (ClassConsole::*function_ptr)(ClassScene&, vector<string>), string description);
     public:
         unsigned short int window_height;
         unsigned short int lines_count;
         // map of console commands
-        map <string, void (ClassConsole::*)(ClassScene&, vector<string>)> commands;
+        map <string, consoleCommand> commands;
         // string placing parameters
         float str_height;
         float font_line_spacing;

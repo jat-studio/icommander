@@ -19,7 +19,7 @@ using namespace std;
 // id GLwindow
 unsigned short int main_window_id, console_window_id;
 
-unsigned short int console_window_height = 70;
+unsigned short int console_window_height = 200;
 
 // list of textures
 vector<string> textures_list;

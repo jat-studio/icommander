@@ -27,8 +27,25 @@ ClassConsole::ClassConsole(unsigned short int window_height){
         ClassConsole::console_str.push_back("");
     }
 
-    ClassConsole::commands["help"] = &ClassConsole::ViewHelp;
-    ClassConsole::commands["addobj"] = &ClassConsole::AddSceneObject;
+    this->RegisterCommand(
+        "help",
+        &ClassConsole::ViewHelp,
+        "[help <page>] show this help"
+    );
+    this->RegisterCommand(
+        "addobj",
+        &ClassConsole::AddSceneObject,
+        "[addobj <obj_type>] add new object into scene, obj_types: 0 - triangle, 1 - quad"
+    );
+}
+
+// register new command in console
+void ClassConsole::RegisterCommand(string name, void (ClassConsole::*function_ptr)(ClassScene&, vector<string>), string description){
+    consoleCommand command;
+    command.function_ptr = function_ptr;
+    command.description = description;
+
+    this->commands[ name ] = command;
 }
 
 // painting Console
@@ -124,7 +141,8 @@ void ClassConsole::Enter(ClassScene &active_scene){
 
     //call function
     if (this->commands.count(parsed_command[0]) > 0){
-        (this->*ClassConsole::commands[ parsed_command[0] ])(active_scene, parsed_command);
+
+        (this->*ClassConsole::commands[ parsed_command[0] ].function_ptr)(active_scene, parsed_command);
     }
     else{
         this->AddStr("error command | " + this->current_key);
@@ -159,13 +177,9 @@ void ClassConsole::ViewHelp(ClassScene &active_scene, vector<string> parsed_comm
     }
 
     // getting all available console commands
-    vector<string> available_commands_list;
-    for (
-        map<string, void (ClassConsole::*)(ClassScene&, vector<string>)>::iterator it = this->commands.begin();
-        it != this->commands.end();
-        ++it
-    ){
-        available_commands_list.push_back(it->first);
+    vector<string> available_commands_desriptions;
+    for ( map<string, consoleCommand>::iterator it = this->commands.begin(); it != this->commands.end(); ++it ){
+        available_commands_desriptions.push_back(it->second.description);
     }
 
     unsigned short int commands_count = this->commands.size();
@@ -174,18 +188,18 @@ void ClassConsole::ViewHelp(ClassScene &active_scene, vector<string> parsed_comm
         commands_count = this->lines_count - 3;
 
         unsigned short int start_index = page * commands_count;
-        if (start_index > available_commands_list.size()){
+        if (start_index > available_commands_desriptions.size()){
             start_index = 0;
         }
 
         for (unsigned short int i = start_index; i < start_index + commands_count; i++){
-            this->AddStr(available_commands_list[i]);
+            this->AddStr(available_commands_desriptions[i]);
         }
         this->AddStr("-- more by help <page> --");
     }
     else{
         for (unsigned short int i = 0; i < commands_count; i++){
-            this->AddStr(available_commands_list[i]);
+            this->AddStr(available_commands_desriptions[i]);
         }
     }
 }

@@ -246,6 +246,26 @@ void ClassScene::ProcessKeys(unsigned char key, int x, int y){
 
 }
 
+// initialization main window
+void ClassScene::MainWindowInit(int argc, char* argv[], const char* name, intPoint2d position, intPoint2d sizes, bool is_fullscreen){
+    // initializing and create window GLUT
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGBA | GLUT_DOUBLE);
+    glutInitWindowPosition(position.x, position.y);
+    glutInitWindowSize(sizes.x, sizes.y);
+    this->main_window_id = glutCreateWindow(name);
+    if (is_fullscreen) {
+        glutFullScreen();
+    }
+
+    // background color
+    glClearColor(0, 0, 0, 0.0);
+    // smoothing paint of color
+    glShadeModel(GL_SMOOTH);
+    // modified perspective
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+}
+
 // destructor
 ClassScene::~ClassScene(){
     ClassScene::TextureManager.clear();

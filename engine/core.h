@@ -85,11 +85,13 @@ class ClassScene{
           2 - up
           3 - down*/
         void ProcessMoving(unsigned short int direction);
+        // initialization main window
+        void MainWindowInit(int argc, char* argv[], const char* name, intPoint2d position, intPoint2d sizes, bool is_fullscreen);
         // destructor
         ~ClassScene();
 
         // friendly classes
-        friend class ClassConsole;
+        //friend class ClassConsole;
 };
 
 class ClassSceneSubWindow{

@@ -29,6 +29,22 @@ void ClassSceneObject::ProcessMoving(unsigned short int direction, float speed){
 // destructor
 ClassSceneObject::~ClassSceneObject(){}
 
+/*#####################Class SceneSubWindow implementation###################*/
+// constructor
+ClassSceneSubWindow::ClassSceneSubWindow(){}
+
+// painting window
+void ClassSceneSubWindow::Draw(){}
+
+// resizing window
+void ClassSceneSubWindow::Reshape(GLsizei Width, GLsizei Height){}
+
+// processing keyboard keys
+void ClassSceneSubWindow::ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y){}
+
+// destructor
+ClassSceneSubWindow::~ClassSceneSubWindow(){}
+
 /*#####################Class Scene implementation###################*/
 // constructor
 ClassScene::ClassScene(vector<string> &textures_list){
@@ -194,6 +210,40 @@ void ClassScene::Reshape(GLsizei Width, GLsizei Height){
     glViewport(0, 0, Width, Height);
     gluPerspective(45.0, (GLfloat) Width / (GLfloat) Height, 0.1, 100.0);
     glMatrixMode(GL_MODELVIEW);
+
+    // reshaping console window TODO: extract to ClassConsole
+    glutSetWindow(this->subwindows.begin()->first);
+    glutHideWindow();
+    glutReshapeWindow( Width - 20, 200 );
+    glutShowWindow();
+    glutSetWindow(this->main_window_id);
+}
+
+// processing keyboard keys
+void ClassScene::ProcessKeys(unsigned char key, int x, int y){
+    // select application mode
+    switch (this->app_mode){
+        // game mode
+        case 0:
+            switch (key){
+            // escape - exit
+            case 27:
+                this->ClearTextures();
+                glutDestroyWindow(this->main_window_id);
+            break;
+            // "`" key - enter console mode
+            case 96:
+                this->subwindows.begin()->second->visible = true;
+                this->app_mode = 1;
+            break;
+        }
+        break;
+        // console mode
+        case 1:
+            this->subwindows.begin()->second->ProcessKeys(*this, key, x, y);
+        break;
+    }
+
 }
 
 // destructor

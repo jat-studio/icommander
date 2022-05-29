@@ -2,8 +2,6 @@ using namespace std;
 #ifndef CORE_H_INCLUDED
 #define CORE_H_INCLUDED
 
-#include <list>
-
 // scale of scene
 const float scale = 0.07;
 
@@ -29,6 +27,8 @@ class ClassSceneObject{
         ~ClassSceneObject();
 };
 
+class ClassSceneSubWindow;
+
 class ClassScene{
     private:
         void DrawSceneObjects();
@@ -38,8 +38,11 @@ class ClassScene{
         // 0 - game
         // 1 - console
         unsigned short int app_mode = 0;
-
-        list<ClassSceneObject*> scene_objects;
+        unsigned short int main_window_id;
+        // subwindows
+        map<unsigned short int, ClassSceneSubWindow*> subwindows;
+        // scene objects
+        vector<ClassSceneObject*> scene_objects;
 
         unsigned short int textures_count;
         // index texture of tiles
@@ -69,6 +72,8 @@ class ClassScene{
         void Reshape(GLsizei Width, GLsizei Height);
         // loading textures
         void LoadTextures(vector<string> &textures_list);
+        // processing keyboard keys
+        void ProcessKeys(unsigned char key, int x, int y);
         // deleting textures
         void ClearTextures();
         // painting Scene
@@ -85,6 +90,23 @@ class ClassScene{
 
         // friendly classes
         friend class ClassConsole;
+};
+
+class ClassSceneSubWindow{
+    private:
+    public:
+        bool visible = false;
+
+        // constructor
+        ClassSceneSubWindow();
+        // painting window
+        virtual void Draw();
+        // resizing window
+        virtual void Reshape(GLsizei Width, GLsizei Height);
+        // processing keyboard keys
+        virtual void ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y);
+        // destructor
+        ~ClassSceneSubWindow();
 };
 
 #endif

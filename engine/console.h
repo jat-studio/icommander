@@ -2,7 +2,7 @@ using namespace std;
 #ifndef CONSOLE_H_INCLUDED
 #define CONSOLE_H_INCLUDED
 
-class ClassConsole{
+class ClassConsole : public ClassSceneSubWindow{
     private:
         const static unsigned short int CONSOLE_FONT_PIXELS_LINE_SPACING = 4;
         const static unsigned short int CONSOLE_FONT_PIXELS_HEIGHT = 13;
@@ -17,11 +17,12 @@ class ClassConsole{
         // register new command in console
         void RegisterCommand(string name, void (ClassConsole::*function_ptr)(ClassScene&, vector<string>), string description);
     public:
+        unsigned short int window_id;
         unsigned short int window_height;
-        unsigned short int lines_count;
         // map of console commands
         map <string, consoleCommand> commands;
         // string placing parameters
+        unsigned short int lines_count;
         float str_height;
         float font_line_spacing;
         float str_current_pos;
@@ -33,17 +34,15 @@ class ClassConsole{
         // entering string
         string command_str = "Command~:";
         string current_key = "";
-        // console visible state
-        bool visible = false;
 
         // constructor
         ClassConsole(unsigned short int window_height);
         // painting Console
-        void Draw(ClassScene &active_scene, unsigned short int console, unsigned short int wnd);
+        virtual void Draw(ClassScene &active_scene);
         // set 2d mode
-        void Reshape(GLsizei Width, GLsizei Height);
+        virtual void Reshape(GLsizei Width, GLsizei Height);
         // processing keyboard keys in console mode
-        void ProcessKeys(ClassScene &active_scene, unsigned char key);
+        virtual void ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y);
         // add some string to end of console
         void AddStr(string new_string);
         // pressing Enter

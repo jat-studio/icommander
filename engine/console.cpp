@@ -49,9 +49,9 @@ void ClassConsole::RegisterCommand(string name, void (ClassConsole::*function_pt
 }
 
 // painting Console
-void ClassConsole::Draw(ClassScene &active_scene, unsigned short int console, unsigned short int wnd){
-    glutSetWindow(console);
-    if (!ClassConsole::visible){
+void ClassConsole::Draw(ClassScene &active_scene){
+    glutSetWindow(this->window_id);
+    if (!this->visible){
         glutHideWindow();
     }
     else{
@@ -65,25 +65,25 @@ void ClassConsole::Draw(ClassScene &active_scene, unsigned short int console, un
     glColor3f(0.0, 0.0, 0.0);
 
     // calculate fps
-    ClassConsole::fps++;
-    ClassConsole::t = glutGet(GLUT_ELAPSED_TIME);
-    if (ClassConsole::t - ClassConsole::dt > 1000){
-        ClassConsole::console_str[0] = "FPS:" + Int_To_Str((int)(ClassConsole::fps * 1000.0 / (ClassConsole::t - ClassConsole::dt)));
-        ClassConsole::dt = ClassConsole::t;
-        ClassConsole::fps = 0;
+    this->fps++;
+    this->t = glutGet(GLUT_ELAPSED_TIME);
+    if (this->t - this->dt > 1000){
+        this->console_str[0] = "FPS:" + Int_To_Str((int)(this->fps * 1000.0 / (this->t - this->dt)));
+        this->dt = this->t;
+        this->fps = 0;
     }
 
-    ClassConsole::str_current_pos = 1.0 - ClassConsole::str_height;
-    for (unsigned short int i = 0; i < ClassConsole::lines_count - 1; i++){
-        active_scene.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, ClassConsole::console_str[i]);
-        ClassConsole::str_current_pos -= ClassConsole::str_height + ClassConsole::font_line_spacing;
+    this->str_current_pos = 1.0 - this->str_height;
+    for (unsigned short int i = 0; i < this->lines_count - 1; i++){
+        active_scene.DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, this->console_str[i]);
+        this->str_current_pos -= this->str_height + this->font_line_spacing;
     }
 
-    active_scene.DrawStaticString(-0.99, ClassConsole::str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (ClassConsole::command_str + ClassConsole::current_key + "_"));
+    active_scene.DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (this->command_str + this->current_key + "_"));
 
     glFlush();
 
-    glutSetWindow(wnd);
+    glutSetWindow(active_scene.main_window_id);
 }
 
 // set 2d mode
@@ -96,7 +96,7 @@ void ClassConsole::Reshape(GLsizei Width, GLsizei Height){
 }
 
 // processing keyboard keys in console mode
-void ClassConsole::ProcessKeys(ClassScene &active_scene, unsigned char key){
+void ClassConsole::ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y){
     // escape - exit to game mode
     if (key == 27){
         this->visible = false;

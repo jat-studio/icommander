@@ -13,6 +13,7 @@ using namespace std;
 #include "engine/core.h"
 #include "engine/console.h"
 #include "engine/ic_strings.h"
+#include "engine/utils.h"
 #include "ships.h"
 
 /*#####################Class Console implementation###################*/
@@ -49,7 +50,7 @@ void ClassConsole::RegisterCommand(string name, void (ClassConsole::*function_pt
 }
 
 // painting Console
-void ClassConsole::Draw(ClassScene &active_scene){
+void ClassConsole::Draw(){
     glutSetWindow(this->window_id);
     if (!this->visible){
         glutHideWindow();
@@ -75,15 +76,13 @@ void ClassConsole::Draw(ClassScene &active_scene){
 
     this->str_current_pos = 1.0 - this->str_height;
     for (unsigned short int i = 0; i < this->lines_count - 1; i++){
-        active_scene.DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, this->console_str[i]);
+        DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, this->console_str[i]);
         this->str_current_pos -= this->str_height + this->font_line_spacing;
     }
 
-    active_scene.DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (this->command_str + this->current_key + "_"));
+    DrawStaticString(-0.99, this->str_current_pos, 0.0, GLUT_BITMAP_8_BY_13, (this->command_str + this->current_key + "_"));
 
     glFlush();
-
-    glutSetWindow(active_scene.main_window_id);
 }
 
 // set 2d mode

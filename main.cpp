@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
     // defining events of window
     glutDisplayFunc([]() -> void { Scene.Draw(); });
     glutReshapeFunc([](GLsizei Width, GLsizei Height) -> void { Scene.Reshape(Width, Height); });
-    glutIdleFunc([]() -> void { Scene.Draw(); Console.Draw(Scene); });
+    glutIdleFunc([]() -> void { Scene.Draw(); Console.Draw(); });
     glutKeyboardFunc([](unsigned char key, int x, int y) -> void { Scene.ProcessKeys(key, x, y); });
 
     // console subwindow
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]){
     Console.window_id = glutCreateSubWindow(Scene.main_window_id, 10, 10, glutGet(GLUT_WINDOW_WIDTH) - 20, Console.window_height);
     Scene.subwindows.insert({Console.window_id, &Console});
     glClearColor(0.0, 1.0, 0.0, 0.0);
-    glutDisplayFunc([]() -> void { Console.Draw(Scene); });
+    glutDisplayFunc([]() -> void { Console.Draw(); });
     glutReshapeFunc([](GLsizei Width, GLsizei Height) -> void { Console.Reshape(Width, Height); });
 
     // processing events of window

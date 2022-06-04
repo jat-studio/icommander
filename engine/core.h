@@ -62,12 +62,6 @@ class ClassScene{
         void InitTextures(unsigned short int textures_count);
         // loading texture by filename
         void LoadTextureImage(const char *texture_name, GLuint texture);
-        // enter to ortho mode
-        void setOrthoProjection(GLsizei Width, GLsizei Height);
-        // exit of ortho mode
-        void setPerspectiveProjection();
-        // output string
-        void DrawStaticString(float x, float y, float z, void *font, string input);
         // repainting OpenGL by reshape window
         void Reshape(GLsizei Width, GLsizei Height);
         // loading textures

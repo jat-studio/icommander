@@ -64,42 +64,6 @@ void ClassScene::InitTextures(unsigned short int textures_count){
     //texture_tiles = new GLuint[texture_tiles];
 }
 
-// set 2d mode
-void ClassScene::setOrthoProjection(GLsizei Width, GLsizei Height){
-    glColor3f(0.0, 0.0, 0.0);
-    glDisable(GL_BLEND);
-
-    glMatrixMode(GL_PROJECTION);
-    glPushMatrix();
-    glLoadIdentity();
-    gluOrtho2D(0, 0, Width, Height);
-    glMatrixMode(GL_MODELVIEW);
-
-    glPushMatrix();
-    glLoadIdentity();
-}
-
-// set 3d mode
-void ClassScene::setPerspectiveProjection(){
-    glPopMatrix();
-
-    glMatrixMode(GL_PROJECTION);
-    glPopMatrix();
-    glMatrixMode(GL_MODELVIEW);
-
-    glColor3f(1.0, 1.0, 1.0);
-    glEnable(GL_BLEND);
-}
-
-// output string
-void ClassScene::DrawStaticString(float x, float y, float z, void *font, string input){
-    glRasterPos3f(x, y, z);
-    unsigned short int len = input.length();
-    for(unsigned short int i = 0; i < len; i++){
-        glutBitmapCharacter(font, input[i]);
-    }
-}
-
 // loading texture by filename
 void ClassScene::LoadTextureImage(const char *texture_name, GLuint texture){
     // parameters of image
@@ -171,6 +135,8 @@ void ClassScene::ClearTextures(){
 
 // painting Scene
 void ClassScene::Draw(){
+    glutSetWindow(this->main_window_id);
+
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt(

@@ -38,7 +38,7 @@ class ClassConsole : public ClassSceneSubWindow{
         // constructor
         ClassConsole(unsigned short int window_height);
         // painting Console
-        virtual void Draw(ClassScene &active_scene);
+        virtual void Draw();
         // set 2d mode
         virtual void Reshape(GLsizei Width, GLsizei Height);
         // processing keyboard keys in console mode

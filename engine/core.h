@@ -28,9 +28,19 @@ class ClassSceneObject{
 };
 
 class ClassSceneSubWindow;
+class ClassScene;
+
+static ClassScene* scene_instance;
+static ClassSceneSubWindow* subwindow_instance;
 
 class ClassScene{
     private:
+        // callbacks for GL events registration
+        static void DrawCallback(){ scene_instance->Draw(); }
+        static void IdleCallback(){ scene_instance->Idle(); }
+        static void ReshapeCallback(GLsizei Width, GLsizei Height){ scene_instance->Reshape(Width, Height); }
+        static void KeyoardCallback(unsigned char key, int x, int y){ scene_instance->ProcessKeys(key, x, y); }
+
         void DrawSceneObjects();
         void DrawStars();
     public:
@@ -72,6 +82,8 @@ class ClassScene{
         void ClearTextures();
         // painting Scene
         void Draw();
+        // processing idle
+        void Idle();
         /*processing move camera
           variable direction:
           0 - left
@@ -81,16 +93,19 @@ class ClassScene{
         void ProcessMoving(unsigned short int direction);
         // initialization main window
         void MainWindowInit(int argc, char* argv[], const char* name, intPoint2d position, intPoint2d sizes, bool is_fullscreen);
+        // initialization subwindow
+        void SubWindowInit(ClassSceneSubWindow &subwindow_obj, intPoint2d position, intPoint2d sizes);
         // destructor
         ~ClassScene();
-
-        // friendly classes
-        //friend class ClassConsole;
 };
 
 class ClassSceneSubWindow{
     private:
+        // callbacks for GL events registration
+        static void DrawCallback(){ subwindow_instance->Draw(); }
+        static void ReshapeCallback(GLsizei Width, GLsizei Height){ subwindow_instance->Reshape(Width, Height); }
     public:
+        unsigned short int window_id;
         bool visible = false;
 
         // constructor

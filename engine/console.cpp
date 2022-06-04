@@ -52,6 +52,7 @@ void ClassConsole::RegisterCommand(string name, void (ClassConsole::*function_pt
 // painting Console
 void ClassConsole::Draw(){
     glutSetWindow(this->window_id);
+
     if (!this->visible){
         glutHideWindow();
     }
@@ -140,7 +141,6 @@ void ClassConsole::Enter(ClassScene &active_scene){
 
     //call function
     if (this->commands.count(parsed_command[0]) > 0){
-
         (this->*ClassConsole::commands[ parsed_command[0] ].function_ptr)(active_scene, parsed_command);
     }
     else{

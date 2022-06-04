@@ -17,7 +17,6 @@ class ClassConsole : public ClassSceneSubWindow{
         // register new command in console
         void RegisterCommand(string name, void (ClassConsole::*function_ptr)(ClassScene&, vector<string>), string description);
     public:
-        unsigned short int window_id;
         unsigned short int window_height;
         // map of console commands
         map <string, consoleCommand> commands;

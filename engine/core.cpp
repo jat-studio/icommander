@@ -6,6 +6,7 @@ using namespace std;
 #include <vector>
 #include <map>
 #include <algorithm>
+#include <typeinfo>
 
 /*Open GL*/
 #include "GL/glut.h"
@@ -42,6 +43,9 @@ void ClassSceneSubWindow::Reshape(GLsizei Width, GLsizei Height){}
 // processing keyboard keys
 void ClassSceneSubWindow::ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y){}
 
+// register events for window in GL
+void RegisterWindowEvents(){}
+
 // destructor
 ClassSceneSubWindow::~ClassSceneSubWindow(){}
 
@@ -54,6 +58,8 @@ ClassScene::ClassScene(vector<string> &textures_list){
     // load Textures
     this->LoadTextures(textures_list);
     this->InitTextures(textures_list.size());
+
+    scene_instance = this;
 }
 
 // initialization count of textures
@@ -140,18 +146,33 @@ void ClassScene::Draw(){
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
     gluLookAt(
-        ClassScene::camera_xpos, ClassScene::camera_ypos, -6.0,
-        ClassScene::camera_xpos, ClassScene::camera_ypos, 1.0,
+        this->camera_xpos, this->camera_ypos, -6.0,
+        this->camera_xpos, this->camera_ypos, 1.0,
         0.0, 1.0, 0.0
     );
 
     // painting world
     glScalef(scale, scale, 0.0);
 
-    ClassScene::DrawSceneObjects();
-    ClassScene::DrawStars();
+    this->DrawSceneObjects();
+    this->DrawStars();
 
     glutSwapBuffers();
+
+    /*
+    if (this->subwindows.size() > 0){
+        for (
+            map<unsigned short int, ClassSceneSubWindow*>::iterator it = this->subwindows.begin();
+            it != this->subwindows.end();
+            ++it
+        ){
+            ClassSceneSubWindow subwindow = *it->second;
+            glutSetWindow(it->first);
+            subwindow.Draw();
+        }
+    }*/
+
+    glutSetWindow(this->main_window_id);
 }
 
 void ClassScene::DrawStars(){
@@ -169,6 +190,8 @@ void ClassScene::DrawSceneObjects(){
 
 // repainting OpenGL by reshape window
 void ClassScene::Reshape(GLsizei Width, GLsizei Height){
+    glutSetWindow(this->main_window_id);
+
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -177,11 +200,20 @@ void ClassScene::Reshape(GLsizei Width, GLsizei Height){
     gluPerspective(45.0, (GLfloat) Width / (GLfloat) Height, 0.1, 100.0);
     glMatrixMode(GL_MODELVIEW);
 
-    // reshaping console window TODO: extract to ClassConsole
-    glutSetWindow(this->subwindows.begin()->first);
-    glutHideWindow();
-    glutReshapeWindow( Width - 20, 200 );
-    glutShowWindow();
+    if (this->subwindows.size() > 0){
+        for (
+            map<unsigned short int, ClassSceneSubWindow*>::iterator it = this->subwindows.begin();
+            it != this->subwindows.end();
+            ++it
+        ){
+            ClassSceneSubWindow subwindow = *it->second;
+            glutSetWindow(it->first);
+            glutHideWindow();
+            glutReshapeWindow( Width - 20, 200 );
+            glutShowWindow();
+        }
+    }
+
     glutSetWindow(this->main_window_id);
 }
 
@@ -230,6 +262,21 @@ void ClassScene::MainWindowInit(int argc, char* argv[], const char* name, intPoi
     glShadeModel(GL_SMOOTH);
     // modified perspective
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+    // defining events of main window
+    //glutDisplayFunc(ClassScene::DrawCallback);
+    //glutReshapeFunc(ClassScene::ReshapeCallback);
+    //glutKeyboardFunc(ClassScene::KeyoardCallback);
+}
+
+// initialization subwindow
+void ClassScene::SubWindowInit(ClassSceneSubWindow &subwindow_obj, intPoint2d position, intPoint2d sizes){
+    glutInitDisplayMode(GLUT_RGBA | GLUT_SINGLE);
+
+    subwindow_obj.window_id = glutCreateSubWindow(this->main_window_id, position.x, position.y, sizes.x, sizes.y);
+    this->subwindows.insert({subwindow_obj.window_id, &subwindow_obj});
+
+    glClearColor(0.0, 1.0, 0.0, 0.0);
 }
 
 // destructor

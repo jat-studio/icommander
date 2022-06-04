@@ -2,7 +2,7 @@
 1652472246 source:/home/dmitry/code/icommander/ic_strings.cpp
 	<iostream>
 
-1654334204 source:/home/dmitry/code/icommander/main.cpp
+1654338261 source:/home/dmitry/code/icommander/main.cpp
 	<iostream>
 	<vector>
 	<map>
@@ -11,7 +11,6 @@
 	"IL/ilu.h"
 	"engine/core.h"
 	"engine/console.h"
-	"engine/ic_strings.h"
 	"ships.h"
 
 1652168604 /home/dmitry/code/icommander/GL/glut.h
@@ -80,9 +79,9 @@
 	<limits.h>
 	<wchar.h>
 
-1652550201 /home/dmitry/code/icommander/ships.h
+1654345558 /home/dmitry/code/icommander/ships.h
 
-1653735748 source:/home/dmitry/code/icommander/ships.cpp
+1654344270 source:/home/dmitry/code/icommander/ships.cpp
 	<vector>
 	<string>
 	<map>
@@ -92,7 +91,7 @@
 	"engine/core.h"
 	"ships.h"
 
-1654335166 source:/home/dmitry/code/icommander/engine/console.cpp
+1654350412 source:/home/dmitry/code/icommander/engine/console.cpp
 	<iostream>
 	<map>
 	<string>
@@ -100,7 +99,6 @@
 	"GL/glut.h"
 	"engine/core.h"
 	"engine/console.h"
-	"engine/ic_strings.h"
 	"engine/utils.h"
 	"ships.h"
 
@@ -115,15 +113,15 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1654333418 /home/dmitry/code/icommander//engine/core.h
+1654346591 /home/dmitry/code/icommander//engine/core.h
 
-1654332905 /home/dmitry/code/icommander//engine/console.h
+1654349602 /home/dmitry/code/icommander//engine/console.h
 
 1653741790 /home/dmitry/code/icommander//engine/ic_strings.h
 
-1652550201 /home/dmitry/code/icommander//ships.h
+1654345558 /home/dmitry/code/icommander//ships.h
 
-1654335287 source:/home/dmitry/code/icommander/engine/core.cpp
+1654346952 source:/home/dmitry/code/icommander/engine/core.cpp
 	<iostream>
 	<string>
 	<array>
@@ -144,15 +142,17 @@
 	<iostream>
 	<vector>
 
-1654333418 /home/dmitry/code/icommander/engine/core.h
+1654346591 /home/dmitry/code/icommander/engine/core.h
 
-1654332905 /home/dmitry/code/icommander/engine/console.h
+1654349602 /home/dmitry/code/icommander/engine/console.h
 
 1653741790 /home/dmitry/code/icommander/engine/ic_strings.h
 
-1654331884 /home/dmitry/code/icommander//engine/utils.h
+1654347505 /home/dmitry/code/icommander//engine/utils.h
 
-1654331843 source:/home/dmitry/code/icommander/engine/utils.cpp
+1654347492 source:/home/dmitry/code/icommander/engine/utils.cpp
 	<string>
+	<iostream>
+	<vector>
 	"GL/glut.h"
 

@@ -50,6 +50,10 @@ class ClassConsole : public ClassSceneSubWindow{
         void AddSceneObject(ClassScene &active_scene, vector<string> parsed_command);
         // view console commands
         void ViewHelp(ClassScene &active_scene, vector<string> parsed_command);
+        // view list of objects or object info
+        void GetObjectInfo(ClassScene &active_scene, vector<string> parsed_command);
+        // get scene delta time
+        void GetDT(ClassScene &active_scene, vector<string> parsed_command);
         // destructor
         ~ClassConsole();
 };

@@ -35,7 +35,17 @@ ClassConsole::ClassConsole(unsigned short int window_height){
     this->RegisterCommand(
         "addobj",
         &ClassConsole::AddSceneObject,
-        "[addobj <obj_type>] add new object into scene, obj_types: 0 - triangle, 1 - quad"
+        "[addobj <obj_type> <float_speed>] add new object into scene, obj_types: 0 - triangle, 1 - quad"
+    );
+    this->RegisterCommand(
+        "objects",
+        &ClassConsole::GetObjectInfo,
+        "[objects <object_id>] list objects or object info with object_id defined"
+    );
+    this->RegisterCommand(
+        "dt",
+        &ClassConsole::GetDT,
+        "[dt] get scene delta time"
     );
 }
 
@@ -144,18 +154,28 @@ void ClassConsole::Enter(ClassScene &active_scene){
 // add new scene object by type
 void ClassConsole::AddSceneObject(ClassScene &active_scene, vector<string> parsed_command){
     unsigned short int object_type = Str_To_Int( parsed_command[1] );
+    float speed = 0.0;
+    if (parsed_command.size() > 2){
+        speed = stof( parsed_command[2] );
+    }
 
-    intPoint2d position;
-    position.x = rand() % 130 - 65;
-    position.y = rand() % 70 - 35;
+    floatPoint3d position;
+    position.x = float( rand() % 130 - 65 );
+    position.y = float( rand() % 70 - 35 );
+    position.z = 0.0;
+
+    ClassSceneObject* new_scene_object;
     switch (object_type){
         case 0:
-            active_scene.scene_objects.push_back(new ClassTriangleShip(position));
+            new_scene_object = new ClassTriangleShip(position);
         break;
         case 1:
-            active_scene.scene_objects.push_back(new ClassQuadShip(position));
+            new_scene_object = new ClassQuadShip(position);
         break;
     }
+
+    new_scene_object->speed = speed;
+    active_scene.scene_objects.push_back(new_scene_object);
 }
 
 // view console commands help
@@ -191,6 +211,27 @@ void ClassConsole::ViewHelp(ClassScene &active_scene, vector<string> parsed_comm
             this->AddStr(available_commands_desriptions[i]);
         }
     }
+}
+
+// view list of objects or object info
+void ClassConsole::GetObjectInfo(ClassScene &active_scene, vector<string> parsed_command){
+    if (parsed_command.size() > 1){
+        unsigned short int object_id = Str_To_Int( parsed_command[1] );
+
+        this->AddStr( to_string( active_scene.scene_objects[ object_id ]->speed ) );
+    }
+    else {
+        unsigned short int i = 0;
+        for ( ClassSceneObject* scene_object : active_scene.scene_objects ){
+            this->AddStr( "[" + to_string(i) + "] " + typeid(scene_object).name() );
+            i++;
+        }
+    }
+}
+
+// get scene delta time
+void ClassConsole::GetDT(ClassScene &active_scene, vector<string> parsed_command){
+    this->AddStr( to_string( active_scene.GetDeltaTime() ) );
 }
 
 // destructor

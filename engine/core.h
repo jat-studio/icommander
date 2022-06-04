@@ -11,18 +11,28 @@ struct intPoint2d{
     int y;
 };
 
+struct floatPoint3d{
+    float x;
+    float y;
+    float z;
+};
+
 /*#######################   classes   #######################*/
 class ClassSceneObject{
-    private:
     public:
-        intPoint2d position;
+        // current coordinates
+        floatPoint3d position;
+        // object direction - one unit vector
+        floatPoint3d direction = {0.0, 1.0, 0.0};
+        // move speed
+        float speed = 0.0;
 
         // constructor
-        ClassSceneObject(intPoint2d position);
+        ClassSceneObject(floatPoint3d position);
         // painting object
         virtual void Draw();
         // moving object
-        virtual void ProcessMoving(unsigned short int direction, float speed);
+        void Move(float deltaTime);
         // destructor
         ~ClassSceneObject();
 };
@@ -40,6 +50,8 @@ class ClassScene{
         static void IdleCallback(){ scene_instance->Idle(); }
         static void ReshapeCallback(GLsizei Width, GLsizei Height){ scene_instance->Reshape(Width, Height); }
         static void KeyoardCallback(unsigned char key, int x, int y){ scene_instance->ProcessKeys(key, x, y); }
+
+        int previous_time;
 
         void DrawSceneObjects();
         void DrawStars();
@@ -84,17 +96,14 @@ class ClassScene{
         void Draw();
         // processing idle
         void Idle();
-        /*processing move camera
-          variable direction:
-          0 - left
-          1 - right
-          2 - up
-          3 - down*/
-        void ProcessMoving(unsigned short int direction);
+        // moving objects
+        void MoveSceneObjects();
         // initialization main window
         void MainWindowInit(int argc, char* argv[], const char* name, intPoint2d position, intPoint2d sizes, bool is_fullscreen);
         // initialization subwindow
         void SubWindowInit(ClassSceneSubWindow &subwindow_obj, intPoint2d position, intPoint2d sizes);
+        // get delta time
+        float GetDeltaTime();
         // destructor
         ~ClassScene();
 };

@@ -19,13 +19,17 @@ using namespace std;
 
 /*#####################Class Scene Object implementation###################*/
 // constructor
-ClassSceneObject::ClassSceneObject(intPoint2d position){
-    ClassSceneObject::position = position;
+ClassSceneObject::ClassSceneObject(floatPoint3d position){
+    this->position = position;
 }
 
 void ClassSceneObject::Draw(){}
 
-void ClassSceneObject::ProcessMoving(unsigned short int direction, float speed){}
+void ClassSceneObject::Move(float deltaTime){
+    this->position.x += direction.x * speed * deltaTime;
+    this->position.y += direction.y * speed * deltaTime;
+    this->position.z += direction.z * speed * deltaTime;
+}
 
 // destructor
 ClassSceneObject::~ClassSceneObject(){}
@@ -52,6 +56,8 @@ ClassSceneSubWindow::~ClassSceneSubWindow(){}
 /*#####################Class Scene implementation###################*/
 // constructor
 ClassScene::ClassScene(vector<string> &textures_list){
+    this->previous_time = glutGet(GLUT_ELAPSED_TIME);
+
     this->xpos = 0;
     this->ypos = 0;
 
@@ -65,7 +71,7 @@ ClassScene::ClassScene(vector<string> &textures_list){
 // initialization count of textures
 void ClassScene::InitTextures(unsigned short int textures_count){
     // count of textures
-    ClassScene::textures_count = textures_count;
+    this->textures_count = textures_count;
     // index texture of tiles
     //texture_tiles = new GLuint[texture_tiles];
 }
@@ -116,7 +122,7 @@ void ClassScene::LoadTextureImage(const char *texture_name, GLuint texture){
 // loading textures
 void ClassScene::LoadTextures(vector<string> &textures_list){
     // create array of textures
-    glGenTextures(textures_count, &ClassScene::texture_tiles[0]);
+    glGenTextures(textures_count, &this->texture_tiles[0]);
 
     // initializing il and ilu library
     ilInit();
@@ -124,10 +130,10 @@ void ClassScene::LoadTextures(vector<string> &textures_list){
     // loading textures
     unsigned short int val = 0;
     for(unsigned short int i = 1; i < textures_list.size(); i += 2){
-        ClassScene::TextureManager.insert(pair<string, unsigned short int>(textures_list[i], val));
+        this->TextureManager.insert(pair<string, unsigned short int>(textures_list[i], val));
         string str = textures_list[0];
         str += textures_list[i + 1];
-        ClassScene::LoadTextureImage(str.c_str(), ClassScene::texture_tiles[val]);
+        this->LoadTextureImage(str.c_str(), ClassScene::texture_tiles[val]);
         val++;
     }
     // enabling textures
@@ -170,12 +176,15 @@ void ClassScene::DrawStars(){
 }
 
 void ClassScene::DrawSceneObjects(){
-    for_each(ClassScene::scene_objects.begin(), ClassScene::scene_objects.end(), mem_fun(&ClassSceneObject::Draw));
+    for ( ClassSceneObject* scene_object : this->scene_objects ){
+        scene_object->Draw();
+    }
 }
 
 // processing idle
 void ClassScene::Idle(){
     this->Draw();
+    this->MoveSceneObjects();
 
     if (this->subwindows.size() > 0){
         for (
@@ -294,7 +303,24 @@ void ClassScene::SubWindowInit(ClassSceneSubWindow &subwindow_obj, intPoint2d po
     glutReshapeFunc(ClassSceneSubWindow::ReshapeCallback);
 }
 
+// get delta time
+float ClassScene::GetDeltaTime(){
+    int t = glutGet(GLUT_ELAPSED_TIME);
+    float dt = (t - this->previous_time) / 1000.0;
+    this->previous_time = t;
+
+    return dt;
+}
+
+// moving objects
+void ClassScene::MoveSceneObjects(){
+    float deltaTime = this->GetDeltaTime();
+    for ( ClassSceneObject* scene_object : this->scene_objects ){
+        scene_object->Move(deltaTime);
+    }
+}
+
 // destructor
 ClassScene::~ClassScene(){
-    ClassScene::TextureManager.clear();
+    this->TextureManager.clear();
 }

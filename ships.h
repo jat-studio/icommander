@@ -8,11 +8,9 @@ class ClassShip : public ClassSceneObject{
     private:
     public:
         // constructor
-        ClassShip(intPoint2d position) : ClassSceneObject(position){};
+        ClassShip(floatPoint3d position) : ClassSceneObject(position){};
         // painting object
         virtual void Draw();
-        // moving object
-        virtual void ProcessMoving(unsigned short int direction, float speed);
         // destructor
         ~ClassShip();
 };
@@ -21,11 +19,9 @@ class ClassTriangleShip : public ClassShip{
     private:
     public:
         // constructor
-        ClassTriangleShip(intPoint2d position) : ClassShip(position){};
+        ClassTriangleShip(floatPoint3d position) : ClassShip(position){};
         // painting object
         virtual void Draw();
-        // moving object
-        virtual void ProcessMoving(unsigned short int direction, float speed);
         // destructor
         ~ClassTriangleShip();
 };
@@ -34,11 +30,9 @@ class ClassQuadShip : public ClassShip{
     private:
     public:
         // constructor
-        ClassQuadShip(intPoint2d position) : ClassShip(position){};
+        ClassQuadShip(floatPoint3d position) : ClassShip(position){};
         // painting object
         virtual void Draw();
-        // moving object
-        virtual void ProcessMoving(unsigned short int direction, float speed);
         // destructor
         ~ClassQuadShip();
 };

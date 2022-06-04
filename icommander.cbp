@@ -43,8 +43,6 @@
 		<Unit filename="engine/console.h" />
 		<Unit filename="engine/core.cpp" />
 		<Unit filename="engine/core.h" />
-		<Unit filename="engine/ic_strings.cpp" />
-		<Unit filename="engine/ic_strings.h" />
 		<Unit filename="engine/utils.cpp" />
 		<Unit filename="engine/utils.h" />
 		<Unit filename="main.cpp" />

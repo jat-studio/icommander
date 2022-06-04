@@ -16,13 +16,9 @@ using namespace std;
 /*#####################Class Ship implementation###################*/
 void ClassShip::Draw(){}
 
-void ClassShip::ProcessMoving(unsigned short int direction, float speed){}
-
 ClassShip::~ClassShip(){}
 
 /*#####################Class Triangle Ship implementation###################*/
-void ClassTriangleShip::ProcessMoving(unsigned short int direction, float speed){}
-
 void ClassTriangleShip::Draw(){
     glBegin(GL_POLYGON);
     glColor3f(0, 1, 0);
@@ -35,8 +31,6 @@ void ClassTriangleShip::Draw(){
 ClassTriangleShip::~ClassTriangleShip(){}
 
 /*#####################Class Quad Ship implementation###################*/
-void ClassQuadShip::ProcessMoving(unsigned short int direction, float speed){}
-
 void ClassQuadShip::Draw(){
     glBegin(GL_POLYGON);
     glColor3f(0, 0, 1);

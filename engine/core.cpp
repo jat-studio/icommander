@@ -158,21 +158,6 @@ void ClassScene::Draw(){
     this->DrawStars();
 
     glutSwapBuffers();
-
-    /*
-    if (this->subwindows.size() > 0){
-        for (
-            map<unsigned short int, ClassSceneSubWindow*>::iterator it = this->subwindows.begin();
-            it != this->subwindows.end();
-            ++it
-        ){
-            ClassSceneSubWindow subwindow = *it->second;
-            glutSetWindow(it->first);
-            subwindow.Draw();
-        }
-    }*/
-
-    glutSetWindow(this->main_window_id);
 }
 
 void ClassScene::DrawStars(){
@@ -186,6 +171,28 @@ void ClassScene::DrawStars(){
 
 void ClassScene::DrawSceneObjects(){
     for_each(ClassScene::scene_objects.begin(), ClassScene::scene_objects.end(), mem_fun(&ClassSceneObject::Draw));
+}
+
+// processing idle
+void ClassScene::Idle(){
+    this->Draw();
+
+    if (this->subwindows.size() > 0){
+        for (
+            map<unsigned short int, ClassSceneSubWindow*>::iterator it = this->subwindows.begin();
+            it != this->subwindows.end();
+            ++it
+        ){
+            ClassSceneSubWindow subwindow = *it->second;
+            glutSetWindow(subwindow.window_id);
+            if (!subwindow.visible){
+                glutHideWindow();
+            } else {
+                glutShowWindow();
+                subwindow.Draw();
+            }
+        }
+    }
 }
 
 // repainting OpenGL by reshape window
@@ -207,10 +214,13 @@ void ClassScene::Reshape(GLsizei Width, GLsizei Height){
             ++it
         ){
             ClassSceneSubWindow subwindow = *it->second;
-            glutSetWindow(it->first);
+            glutSetWindow(subwindow.window_id);
             glutHideWindow();
             glutReshapeWindow( Width - 20, 200 );
-            glutShowWindow();
+
+            if (subwindow.visible){
+                glutShowWindow();
+            }
         }
     }
 

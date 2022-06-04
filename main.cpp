@@ -25,7 +25,7 @@ int main(int argc, char *argv[]){
     Scene.MainWindowInit(argc, argv, "ICommander 0.0.1", {0, 0}, {1024, 768}, true );
     glutDisplayFunc([]() -> void { Scene.Draw(); });
     glutReshapeFunc([](GLsizei Width, GLsizei Height) -> void { Scene.Reshape(Width, Height); });
-    glutIdleFunc([]() -> void { Scene.Draw(); Console.Draw(); });
+    glutIdleFunc([]() -> void { Scene.Idle(); });
     glutKeyboardFunc([](unsigned char key, int x, int y) -> void { Scene.ProcessKeys(key, x, y); });
 
     // console subwindow

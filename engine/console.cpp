@@ -51,15 +51,6 @@ void ClassConsole::RegisterCommand(string name, void (ClassConsole::*function_pt
 
 // painting Console
 void ClassConsole::Draw(){
-    glutSetWindow(this->window_id);
-
-    if (!this->visible){
-        glutHideWindow();
-    }
-    else{
-        glutShowWindow();
-    }
-
     glClear(GL_COLOR_BUFFER_BIT);
 
     glLoadIdentity();

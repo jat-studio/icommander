@@ -274,9 +274,10 @@ void ClassScene::MainWindowInit(int argc, char* argv[], const char* name, intPoi
     glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
     // defining events of main window
-    //glutDisplayFunc(ClassScene::DrawCallback);
-    //glutReshapeFunc(ClassScene::ReshapeCallback);
-    //glutKeyboardFunc(ClassScene::KeyoardCallback);
+    glutDisplayFunc(ClassScene::DrawCallback);
+    glutReshapeFunc(ClassScene::ReshapeCallback);
+    glutIdleFunc(ClassScene::IdleCallback);
+    glutKeyboardFunc(ClassScene::KeyoardCallback);
 }
 
 // initialization subwindow
@@ -287,6 +288,10 @@ void ClassScene::SubWindowInit(ClassSceneSubWindow &subwindow_obj, intPoint2d po
     this->subwindows.insert({subwindow_obj.window_id, &subwindow_obj});
 
     glClearColor(0.0, 1.0, 0.0, 0.0);
+
+    subwindow_instance = &subwindow_obj;
+    glutDisplayFunc(ClassSceneSubWindow::DrawCallback);
+    glutReshapeFunc(ClassSceneSubWindow::ReshapeCallback);
 }
 
 // destructor

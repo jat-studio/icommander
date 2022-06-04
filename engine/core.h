@@ -100,11 +100,11 @@ class ClassScene{
 };
 
 class ClassSceneSubWindow{
-    private:
+    public:
         // callbacks for GL events registration
         static void DrawCallback(){ subwindow_instance->Draw(); }
         static void ReshapeCallback(GLsizei Width, GLsizei Height){ subwindow_instance->Reshape(Width, Height); }
-    public:
+
         unsigned short int window_id;
         bool visible = false;
 

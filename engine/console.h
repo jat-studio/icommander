@@ -13,9 +13,6 @@ class ClassConsole : public ClassSceneSubWindow{
             void (ClassConsole::*function_ptr)(ClassScene&, vector<string>);
             string description;
         };
-
-        // register new command in console
-        void RegisterCommand(string name, void (ClassConsole::*function_ptr)(ClassScene&, vector<string>), string description);
     public:
         unsigned short int window_height;
         // map of console commands
@@ -37,21 +34,17 @@ class ClassConsole : public ClassSceneSubWindow{
         // constructor
         ClassConsole(unsigned short int window_height);
         // painting Console
-        virtual void Draw();
+        void Draw();
         // set 2d mode
-        virtual void Reshape(GLsizei Width, GLsizei Height);
+        void Reshape(GLsizei Width, GLsizei Height);
         // processing keyboard keys in console mode
-        virtual void ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y);
+        void ProcessKeys(ClassScene &active_scene, unsigned char key, int x, int y);
         // add some string to end of console
         void AddStr(string new_string);
         // pressing Enter
         void Enter(ClassScene &active_scene);
-        // add new scene object by type
-        void AddSceneObject(ClassScene &active_scene, vector<string> parsed_command);
         // view console commands
         void ViewHelp(ClassScene &active_scene, vector<string> parsed_command);
-        // view list of objects or object info
-        void GetObjectInfo(ClassScene &active_scene, vector<string> parsed_command);
         // get scene delta time
         void GetDT(ClassScene &active_scene, vector<string> parsed_command);
         // destructor

@@ -15,7 +15,6 @@ using namespace std;
 
 /*My library*/
 #include "engine/core.h"
-#include "ships.h"
 
 /*#####################Class Scene Object implementation###################*/
 // constructor

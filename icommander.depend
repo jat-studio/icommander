@@ -79,7 +79,7 @@
 	<limits.h>
 	<wchar.h>
 
-1654345558 /home/dmitry/code/icommander/ships.h
+1654438168 /home/dmitry/code/icommander/ships.h
 
 1654344270 source:/home/dmitry/code/icommander/ships.cpp
 	<vector>
@@ -91,7 +91,7 @@
 	"engine/core.h"
 	"ships.h"
 
-1654350412 source:/home/dmitry/code/icommander/engine/console.cpp
+1654434602 source:/home/dmitry/code/icommander/engine/console.cpp
 	<iostream>
 	<map>
 	<string>
@@ -113,15 +113,15 @@
 	<GL/glu.h>
 	<stdlib.h>
 
-1654346591 /home/dmitry/code/icommander//engine/core.h
+1654433324 /home/dmitry/code/icommander//engine/core.h
 
-1654349602 /home/dmitry/code/icommander//engine/console.h
+1654436817 /home/dmitry/code/icommander//engine/console.h
 
 1653741790 /home/dmitry/code/icommander//engine/ic_strings.h
 
-1654345558 /home/dmitry/code/icommander//ships.h
+1654438168 /home/dmitry/code/icommander//ships.h
 
-1654346952 source:/home/dmitry/code/icommander/engine/core.cpp
+1654433406 source:/home/dmitry/code/icommander/engine/core.cpp
 	<iostream>
 	<string>
 	<array>
@@ -133,7 +133,6 @@
 	"IL/il.h"
 	"IL/ilu.h"
 	"engine/core.h"
-	"ships.h"
 
 1652168604 /home/dmitry/code/icommander//IL/ilu.h
 	"IL/il.h"
@@ -142,9 +141,9 @@
 	<iostream>
 	<vector>
 
-1654346591 /home/dmitry/code/icommander/engine/core.h
+1654433324 /home/dmitry/code/icommander/engine/core.h
 
-1654349602 /home/dmitry/code/icommander/engine/console.h
+1654436817 /home/dmitry/code/icommander/engine/console.h
 
 1653741790 /home/dmitry/code/icommander/engine/ic_strings.h
 
@@ -155,4 +154,20 @@
 	<iostream>
 	<vector>
 	"GL/glut.h"
+
+1654436836 source:/home/dmitry/code/icommander/ic_console.cpp
+	<map>
+	<string>
+	<typeinfo>
+	<vector>
+	"GL/glut.h"
+	"engine/core.h"
+	"engine/console.h"
+	"engine/utils.h"
+	"ic_console.h"
+	"ships.h"
+
+1654347505 /home/dmitry/code/icommander/engine/utils.h
+
+1654438214 /home/dmitry/code/icommander/ic_console.h
 

@@ -45,6 +45,8 @@
 		<Unit filename="engine/core.h" />
 		<Unit filename="engine/utils.cpp" />
 		<Unit filename="engine/utils.h" />
+		<Unit filename="ic_console.cpp" />
+		<Unit filename="ic_console.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="ships.cpp" />
 		<Unit filename="ships.h" />

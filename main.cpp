@@ -11,14 +11,13 @@ using namespace std;
 
 /*My library*/
 #include "engine/core.h"
-#include "engine/console.h"
-#include "ships.h"
+#include "ic_console.h"
 
 // list of textures
 vector<string> textures_list;
 
 ClassScene Scene(textures_list);
-ClassConsole Console(200);
+ClassICConsole Console(200);
 
 int main(int argc, char *argv[]){
     Scene.MainWindowInit(argc, argv, "ICommander 0.0.1", {0, 0}, {1024, 768}, true );

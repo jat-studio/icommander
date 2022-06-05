@@ -1,3 +1,4 @@
+using namespace std;
 #ifndef SHIPS_H_INCLUDED
 #define SHIPS_H_INCLUDED
 

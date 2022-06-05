@@ -39,6 +39,7 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="aelita.h" />
 		<Unit filename="engine/console.cpp" />
 		<Unit filename="engine/console.h" />
 		<Unit filename="engine/core.cpp" />

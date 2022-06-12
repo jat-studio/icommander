@@ -8,13 +8,16 @@ class ClassConsole : public ClassSceneSubWindow{
         const static unsigned short int CONSOLE_FONT_PIXELS_HEIGHT = 13;
         // from -1 to +1, where 0 is center of window
         const static unsigned short int CONSOLE_WINDOW_SIZE = 2;
-
-        struct consoleCommand{
-            void (ClassConsole::*function_ptr)(ClassScene&, vector<string>);
-            string description;
-        };
     public:
         unsigned short int window_height;
+
+        // console command function pointer type
+        typedef void (ClassConsole::*functionPTR)(ClassScene&, vector<string>);
+        // console command structure
+        struct consoleCommand{
+            functionPTR function_ptr;
+            string description;
+        };
         // map of console commands
         map <string, consoleCommand> commands;
         // string placing parameters

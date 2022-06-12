@@ -2,7 +2,7 @@
 1652472246 source:/home/dmitry/code/icommander/ic_strings.cpp
 	<iostream>
 
-1654338261 source:/home/dmitry/code/icommander/main.cpp
+1654458657 source:/home/dmitry/code/icommander/main.cpp
 	<iostream>
 	<vector>
 	<map>
@@ -10,8 +10,7 @@
 	"IL/il.h"
 	"IL/ilu.h"
 	"engine/core.h"
-	"engine/console.h"
-	"ships.h"
+	"ic_console.h"
 
 1652168604 /home/dmitry/code/icommander/GL/glut.h
 	"freeglut_std.h"
@@ -91,7 +90,7 @@
 	"engine/core.h"
 	"ships.h"
 
-1654434602 source:/home/dmitry/code/icommander/engine/console.cpp
+1655048109 source:/home/dmitry/code/icommander/engine/console.cpp
 	<iostream>
 	<map>
 	<string>
@@ -100,7 +99,6 @@
 	"engine/core.h"
 	"engine/console.h"
 	"engine/utils.h"
-	"ships.h"
 
 1652168604 /home/dmitry/code/icommander//GL/glut.h
 	"freeglut_std.h"
@@ -115,7 +113,7 @@
 
 1654433324 /home/dmitry/code/icommander//engine/core.h
 
-1654436817 /home/dmitry/code/icommander//engine/console.h
+1655048664 /home/dmitry/code/icommander//engine/console.h
 
 1653741790 /home/dmitry/code/icommander//engine/ic_strings.h
 
@@ -143,7 +141,7 @@
 
 1654433324 /home/dmitry/code/icommander/engine/core.h
 
-1654436817 /home/dmitry/code/icommander/engine/console.h
+1655048664 /home/dmitry/code/icommander/engine/console.h
 
 1653741790 /home/dmitry/code/icommander/engine/ic_strings.h
 
@@ -155,7 +153,7 @@
 	<vector>
 	"GL/glut.h"
 
-1654436836 source:/home/dmitry/code/icommander/ic_console.cpp
+1655048758 source:/home/dmitry/code/icommander/ic_console.cpp
 	<map>
 	<string>
 	<typeinfo>
@@ -169,5 +167,6 @@
 
 1654347505 /home/dmitry/code/icommander/engine/utils.h
 
-1654438214 /home/dmitry/code/icommander/ic_console.h
+1655048692 /home/dmitry/code/icommander/ic_console.h
+	<engine/console.h>
 

@@ -18,14 +18,14 @@ using namespace std;
 
 // constructor
 ClassICConsole::ClassICConsole(unsigned short int window_height) : ClassConsole(window_height){
-    //this->commands["addobj"] = {
-    //    &ClassICConsole::AddSceneObject,
-    //    "[addobj <obj_type> <float_speed>] add new object into scene, obj_types: 0 - triangle, 1 - quad"
-    //};
-    //this->commands["objects"] = {
-    //    &ClassICConsole::GetObjectInfo,
-    //    "[objects <object_id>] list objects or object info with object_id defined"
-    //);
+    this->commands["addobj"] = {
+        static_cast<functionPTR>(&ClassICConsole::AddSceneObject),
+        "[addobj <obj_type> <float_speed>] add new object into scene, obj_types: 0 - triangle, 1 - quad"
+    };
+    this->commands["objects"] = {
+       static_cast<functionPTR>(&ClassICConsole::GetObjectInfo),
+        "[objects <object_id>] list objects or object info with object_id defined"
+    };
 }
 
 // add new scene object by type
